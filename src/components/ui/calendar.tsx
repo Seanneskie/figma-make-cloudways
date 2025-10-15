@@ -1,11 +1,46 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker } from "react-day-picker";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
+} from "lucide-react";
+import { DayPicker, type ChevronProps } from "react-day-picker";
 
 import { cn } from "./utils";
 import { buttonVariants } from "./button-variants";
+
+const ChevronIcon = ({
+  className,
+  orientation = "left",
+  size,
+  disabled,
+  ...props
+}: ChevronProps): React.JSX.Element => {
+  const sharedProps = {
+    className: cn(
+      "size-4",
+      disabled ? "opacity-50" : undefined,
+      className,
+    ),
+    size,
+    ...props,
+  };
+
+  switch (orientation) {
+    case "up":
+      return <ChevronUp {...sharedProps} />;
+    case "down":
+      return <ChevronDown {...sharedProps} />;
+    case "right":
+      return <ChevronRight {...sharedProps} />;
+    case "left":
+    default:
+      return <ChevronLeft {...sharedProps} />;
+  }
+};
 
 function Calendar({
   className,
@@ -60,12 +95,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
-        ),
+        Chevron: (chevronProps) => <ChevronIcon {...chevronProps} />,
       }}
       {...props}
     />

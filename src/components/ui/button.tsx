@@ -27,4 +27,5 @@ function Button({
   );
 }
 
-export { Button };
+export { Button, buttonVariants };
+export type { ButtonVariantProps };
